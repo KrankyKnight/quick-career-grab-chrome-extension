@@ -2,7 +2,7 @@
   /* --- TOP VARIABLES --- */
 
   const anchors = document.querySelectorAll('a');
-  const regex = /^(jobs?|careers?)$/gi;
+  const regex = /^(jobs?|careers?|join?.our?.team)$/gi;
   const filteredLinks = [];
   const duplicateAvoider = new Set();
 
