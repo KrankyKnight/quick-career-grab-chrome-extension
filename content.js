@@ -1,9 +1,10 @@
 (function () {
   /* --- TOP VARIABLES --- */
 
-  let anchors = document.querySelectorAll('a');
+  const anchors = document.querySelectorAll('a');
   const regex = /^(jobs?|careers?)$/gi;
-  let filteredLinks = [];
+  const filteredLinks = [];
+  const duplicateAvoider = new Set();
 
   /* --- HELPERS --- */
 
@@ -53,7 +54,10 @@
   /* --- FILTER --- */
   
   for(const link of anchors) {
-    if(scrape(link)) filteredLinks.push(link);
+    if(scrape(link) && !duplicateAvoider(link)) {
+      duplicateAvoider.add(link);
+      filteredLinks.push(link);
+    };
   }
   
   /* --- RESULTS --- */
