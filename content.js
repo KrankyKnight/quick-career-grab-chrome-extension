@@ -1,36 +1,37 @@
 (function () {
-  // Search Variables
+  /* --- TOP VARIABLES --- */
+
   let anchors = document.querySelectorAll('a');
   const regex = /^(jobs?|careers?)$/gi;
   let filteredLinks = [];
 
-  // Message Variables
+  /* --- HELPERS --- */
 
-  
-  // Helpers
+  // Single link found
   function oneLink(link) {
-    if(window.confirm(`Would you like to navigate to ${link}?`)) {
+    if(window.confirm(`Would you like to navigate to the following link: \n${link}`)) {
       window.open(link, '_blank')
     }
   }
 
-  function moreLinks(linkArray, message){
-    if(window.confirm(message)) {
-      let message = `Enter number of desired link: \n`
-
-      for(const index in linkArray) {
-        message += `${index}: ${linkArray[index]} \n`
-      }
-
-      const selection = window.prompt(message);
-
-      if(!linkArray[selection]) {
-        moreLinks(linkArray, `${selection} is not a viable option, try again?`);
-      } else window.open(linkArray[selection], '_blank');
+  // Multiple links found
+  function moreLinks(linkArray, message = ''){
+    let newMessage = `${message} Enter number of desired link: \n`
+    for(const index in linkArray) {
+      newMessage += `${index}: ${linkArray[index]} \n`
     }
+
+    const selection = window.prompt(newMessage);
+
+    if(selection === null) return;
+
+    if(!linkArray[selection]) {
+      moreLinks(linkArray, `${selection} is not a viable option, try again? \n`);
+    } else window.open(linkArray[selection], '_blank');
   }
 
-  function deepSearch(link) {
+  // Scrape for links
+  function scrape(link) {
     let result = false;
 
     function recurseChildren(htmlElement) {
@@ -45,15 +46,18 @@
     }
 
     recurseChildren(link);
-    if(result) return link;
+
+    if(result) return result;
   }
   
-  // Filter Results
+  /* --- FILTER --- */
+  
   for(const link of anchors) {
-    if(deepSearch(link)) filteredLinks.push(link);
+    if(scrape(link)) filteredLinks.push(link);
   }
   
-  // No results
+  /* --- RESULTS --- */
+
   if(filteredLinks.length === 0) {
     alert('No links found during search');
     return;
@@ -61,7 +65,6 @@
 
   if(window.confirm(`${filteredLinks.length} link${filteredLinks.length > 1 ? 's' : ''} found!`)) {
     if(filteredLinks.length === 1) oneLink(filteredLinks[0]);
-    else moreLinks(filteredLinks, `Would you like to see list of links?`);
+    else moreLinks(filteredLinks);
   }
 })();
-

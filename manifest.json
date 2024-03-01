@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Quick Career Grab",
+  "name": "Quick Career Grab Feature Test",
   "description": "Bring a webpage's career link to the top",
   "version": "0.1.0",
   "icons": {
@@ -10,8 +10,13 @@
     "128": "quick-grab-128.png"
   },
   "action": {
-    "default_title": "Click me to grab available career link!",
-    "default_icon": "quick-grab-128.png"
+    "default_title": "Click to find that link!",
+    "default_icon": {
+      "16": "quick-grab-16.png",
+      "32": "quick-grab-32.png",
+      "48": "quick-grab-48.png",
+      "128": "quick-grab-128.png"
+    }
   },
   "permissions": ["activeTab", "scripting"],
   "background": {
