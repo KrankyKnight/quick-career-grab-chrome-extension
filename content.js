@@ -54,8 +54,8 @@
   /* --- FILTER --- */
   
   for(const link of anchors) {
-    if(scrape(link) && !duplicateAvoider(link)) {
-      duplicateAvoider.add(link);
+    if(scrape(link) && !duplicateAvoider.has(link.href)) {
+      duplicateAvoider.add(link.href);
       filteredLinks.push(link);
     };
   }
